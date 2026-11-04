@@ -1,0 +1,277 @@
+:root {
+    --purple-primary: #7c3aed;
+    --purple-dark: #5b21b6;
+    --purple-light: #f3e8ff;
+    --purple-accent: #a855f7;
+    --purple-gradient: linear-gradient(135deg, #5b21b6, #7c3aed, #a855f7);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #2b2d42;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background: linear-gradient(135deg, #faf7ff, #f3e8ff, #fdfaff);
+    background-size: 250% 250%;
+    animation: background-shift 16s ease infinite;
+}
+
+body::before,
+body::after {
+    position: fixed;
+    z-index: -1;
+    width: 22rem;
+    height: 22rem;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.13);
+    filter: blur(2px);
+    pointer-events: none;
+    content: "";
+    animation: float 12s ease-in-out infinite;
+}
+
+body::before {
+    top: 18%;
+    left: -12rem;
+}
+
+body::after {
+    right: -12rem;
+    bottom: 8%;
+    animation-delay: -6s;
+}
+
+.navbar-purple {
+    background: var(--purple-gradient);
+    background-size: 200% 200%;
+    box-shadow: 0 8px 30px rgba(91, 33, 182, 0.25);
+    animation: gradient-shift 8s ease infinite;
+}
+
+.card-custom {
+    border: 0;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 14px 40px rgba(91, 33, 182, 0.1);
+    backdrop-filter: blur(12px);
+    animation: rise-in 0.65s both;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card-custom:hover {
+    box-shadow: 0 20px 48px rgba(91, 33, 182, 0.16);
+    transform: translateY(-3px);
+}
+
+.btn-purple {
+    border: 0;
+    border-radius: 12px;
+    color: #fff;
+    background: var(--purple-gradient);
+    background-size: 200% 200%;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.4s ease;
+}
+
+.btn-purple:hover {
+    color: #fff;
+    background-position: 100% 50%;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-purple:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+}
+
+.form-control:focus {
+    border-color: var(--purple-primary);
+    box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.18);
+}
+
+.task-item {
+    margin-bottom: 10px;
+    border: 0 !important;
+    border-left: 4px solid var(--purple-primary) !important;
+    border-radius: 12px;
+    background-color: #fff;
+    animation: rise-in 0.4s both;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+    background-color: var(--purple-light);
+    box-shadow: 0 6px 16px rgba(91, 33, 182, 0.1);
+    transform: translateX(4px);
+}
+
+.purple-icon-bg {
+    display: inline-flex;
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    color: var(--purple-primary);
+    background-color: var(--purple-light);
+    animation: icon-glow 3s ease-in-out infinite;
+}
+
+.task-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.delete-btn {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.delete-btn:hover {
+    transform: scale(1.08);
+}
+
+.text-purple {
+    color: var(--purple-primary) !important;
+}
+
+.auth-card {
+    max-width: 500px;
+    margin: auto;
+}
+
+@keyframes background-shift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes gradient-shift {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: translate3d(28px, -24px, 0);
+    }
+}
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes icon-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.15);
+    }
+
+    50% {
+        box-shadow: 0 0 0 7px rgba(168, 85, 247, 0);
+    }
+}
+
+@media (max-width: 767.98px) {
+    main.container {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .card-custom {
+        border-radius: 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    main.container {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    .task-item:hover {
+        transform: none;
+    }
+
+    .navbar .container {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .navbar-brand small,
+    #user-email {
+        display: none;
+    }
+
+    #auth-nav-section {
+        margin-left: auto;
+    }
+
+    #todo-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+
+    #todo-form .form-control,
+    #todo-form .btn {
+        width: 100%;
+        border-radius: 10px !important;
+    }
+
+    .card-custom.p-4 {
+        padding: 1.25rem !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

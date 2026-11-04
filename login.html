@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="login">
+    <nav class="navbar navbar-dark navbar-purple py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="login.html">
+                <i class="fa-solid fa-list-check me-2 fs-4"></i>
+                <span>TaskFlow <small class="fs-6 fw-normal opacity-75">| Firebase Todo</small></span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <div id="loading-spinner" class="text-center py-5">
+            <div class="spinner-border text-purple" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="text-muted mt-3">Loading TaskFlow...</p>
+        </div>
+        <div id="app-load-error" class="alert alert-danger d-none" role="alert"></div>
+
+        <section id="auth-section" class="row justify-content-center" style="display: none;">
+            <div class="col-md-7 col-lg-5">
+                <div class="card card-custom auth-card p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <div class="purple-icon-bg mb-3 fs-3">
+                            <i class="fa-solid fa-user-lock"></i>
+                        </div>
+                        <h3 id="auth-form-title" class="fw-bold">Welcome Back</h3>
+                        <p id="auth-form-subtitle" class="text-muted small">
+                            Enter your details to manage your daily tasks.
+                        </p>
+                    </div>
+
+                    <div id="auth-alert" class="alert d-none" role="alert"></div>
+
+                    <form id="auth-form">
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-semibold small">Email Address</label>
+                            <input type="email" class="form-control form-control-lg py-2 fs-6"
+                                id="email" autocomplete="email" placeholder="name@example.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label fw-semibold small">Password</label>
+                            <input type="password" class="form-control form-control-lg py-2 fs-6"
+                                id="password" minlength="6" autocomplete="current-password"
+                                placeholder="Minimum 6 characters" required>
+                        </div>
+                        <button type="submit" id="auth-btn" class="btn btn-purple w-100 py-3 mb-3 fw-bold">
+                            Login
+                        </button>
+                    </form>
+
+                    <div class="text-center">
+                        <p id="toggle-auth-text" class="mb-0 text-muted small">
+                            Don't have an account?
+                            <a href="#" id="toggle-auth-mode" class="fw-bold text-decoration-none text-purple">Sign Up</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        function showAppLoadError(error) {
+            document.getElementById("loading-spinner").classList.add("d-none");
+            const errorBox = document.getElementById("app-load-error");
+            errorBox.textContent = location.protocol === "file:"
+                ? "Browser modules cannot load Firebase from a file URL. In VS Code, right-click login.html and select Open with Live Server."
+                : `TaskFlow could not load its app or Firebase module: ${error?.message || "loading timed out"}. Check the browser Console and internet connection.`;
+            errorBox.classList.remove("d-none");
+        }
+
+        window.setTimeout(() => {
+            if (document.getElementById("loading-spinner").style.display !== "none") {
+                showAppLoadError(new Error("Firebase initialization timed out"));
+            }
+        }, 15000);
+    </script>
+    <script type="module">
+        import("./app.js").catch(showAppLoadError);
+    </script>
+</body>
+</html>
