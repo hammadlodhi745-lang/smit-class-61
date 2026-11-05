@@ -57,7 +57,8 @@ const todoLoading = document.getElementById("todo-loading");
 
 function showAlert(element, message, type = "danger") {
     element.textContent = message;
-    element.className = `alert alert-${type} py-2 small border-0`;
+    const spacing = element === todoAlert ? "mt-3 mb-0" : "";
+    element.className = `alert alert-${type} py-2 small border-0 ${spacing}`;
 }
 
 function getFriendlyError(error) {
