@@ -12,7 +12,7 @@
 <body data-page="login">
     <nav class="navbar navbar-dark navbar-purple py-3">
         <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="login.html">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
                 <i class="fa-solid fa-list-check me-2 fs-4"></i>
                 <span>TaskFlow <small class="fs-6 fw-normal opacity-75">| Firebase Todo</small></span>
             </a>
@@ -75,7 +75,7 @@
             document.getElementById("loading-spinner").classList.add("d-none");
             const errorBox = document.getElementById("app-load-error");
             errorBox.textContent = location.protocol === "file:"
-                ? "Browser modules cannot load Firebase from a file URL. In VS Code, right-click login.html and select Open with Live Server."
+                ? "Browser modules cannot load Firebase from a file URL. Open the site with VS Code Live Server."
                 : `TaskFlow could not load its app or Firebase module: ${error?.message || "loading timed out"}. Check the browser Console and internet connection.`;
             errorBox.classList.remove("d-none");
         }

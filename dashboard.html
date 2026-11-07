@@ -82,7 +82,7 @@
             document.getElementById("loading-spinner").classList.add("d-none");
             const errorBox = document.getElementById("app-load-error");
             errorBox.textContent = location.protocol === "file:"
-                ? "Browser modules cannot load Firebase from a file URL. In VS Code, right-click login.html and select Open with Live Server."
+                ? "Browser modules cannot load Firebase from a file URL. Open the site with VS Code Live Server."
                 : `TaskFlow could not load its app or Firebase module: ${error?.message || "loading timed out"}. Check the browser Console and internet connection.`;
             errorBox.classList.remove("d-none");
         }

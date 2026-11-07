@@ -164,7 +164,7 @@ onAuthStateChanged(auth, (user) => {
 
     if (isDashboard) {
         if (!user) {
-            window.location.replace("login.html");
+            window.location.replace("index.html");
             return;
         }
 
