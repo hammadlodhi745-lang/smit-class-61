@@ -15,6 +15,7 @@ import {
     onSnapshot,
     query,
     serverTimestamp,
+    updateDoc,
     where
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -289,6 +290,17 @@ function renderTodos(todos) {
         text.textContent = todo.text || "";
         content.append(icon, text);
 
+        const actions = document.createElement("div");
+        actions.className = "d-flex align-items-center";
+
+        const editBtn = document.createElement("button");
+        editBtn.type = "button";
+        editBtn.className = "btn btn-sm btn-link text-purple text-decoration-none border-0 delete-btn";
+        editBtn.title = "Edit task";
+        editBtn.setAttribute("aria-label", "Edit task");
+        editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+        editBtn.addEventListener("click", () => editTodo(todo.id, todo.text || "", editBtn));
+
         const deleteBtn = document.createElement("button");
         deleteBtn.type = "button";
         deleteBtn.className = "btn btn-sm btn-link text-danger text-decoration-none border-0 delete-btn";
@@ -297,11 +309,43 @@ function renderTodos(todos) {
         deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
         deleteBtn.addEventListener("click", () => deleteTodo(todo.id, deleteBtn));
 
-        item.append(content, deleteBtn);
+        actions.append(editBtn, deleteBtn);
+        item.append(content, actions);
         fragment.appendChild(item);
     });
 
     todoList.appendChild(fragment);
+}
+
+async function editTodo(id, currentText, button) {
+    const updatedText = window.prompt("Edit your task:", currentText);
+    if (updatedText === null) return;
+
+    const text = updatedText.trim();
+    if (!text) {
+        showAlert(todoAlert, "Task cannot be empty.");
+        return;
+    }
+
+    if (text.length > 300) {
+        showAlert(todoAlert, "Task cannot exceed 300 characters.");
+        return;
+    }
+
+    if (text === currentText) return;
+
+    const user = auth.currentUser;
+    if (!user) return;
+
+    button.disabled = true;
+    try {
+        await updateDoc(doc(db, "todos", id), { text });
+        showAlert(todoAlert, "Task updated successfully!", "success");
+    } catch (error) {
+        console.error("Update task error:", error);
+        showAlert(todoAlert, getFriendlyError(error));
+        button.disabled = false;
+    }
 }
 
 async function deleteTodo(id, button) {

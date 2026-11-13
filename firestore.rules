@@ -13,7 +13,12 @@ service cloud.firestore {
             allow get, list, delete: if request.auth != null
                 && resource.data.uid == request.auth.uid;
 
-            allow update: if false;
+            allow update: if request.auth != null
+                && resource.data.uid == request.auth.uid
+                && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['text'])
+                && request.resource.data.text is string
+                && request.resource.data.text.size() > 0
+                && request.resource.data.text.size() <= 300;
         }
     }
 }
